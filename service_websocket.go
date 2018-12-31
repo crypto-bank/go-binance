@@ -411,8 +411,8 @@ func (as *apiService) exitHandler(c *websocket.Conn, done chan struct{}) {
 
 	for {
 		select {
-		case t := <-ticker.C:
-			err := c.WriteMessage(websocket.TextMessage, []byte(t.String()))
+		case <-ticker.C:
+			err := c.WriteMessage(websocket.PingMessage, nil)
 			if err != nil {
 				level.Error(as.Logger).Log("wsWrite", err)
 				return
